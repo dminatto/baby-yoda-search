@@ -1,6 +1,6 @@
 # Baby Yoda Search
 
-![alt text](https://github.com/dminatto/[reponame]/blob/baby-yoda-search/assets/baby-yoda.jpg?raw=true)
+![Baby Yoda Search](https://www.junglescout.com/wp-content/uploads/2019/12/baby-yoda-4.png)
 
 > A Vue.js project
 
