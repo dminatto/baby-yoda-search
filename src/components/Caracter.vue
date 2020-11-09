@@ -12,21 +12,21 @@
                 ></v-card-title>
                 <v-card-text>
                   <div class="caracteristics">
-                    <v-row>
-                      <v-col-6 class="caracteristics-column">
+                    <v-row >
+                      <v-col cols="6" sm="4" md="3" lg="3" offset-lg="1">
                         <p><b>Birth Year: </b>{{ item.birth_year }}</p>
                         <p><b>Gender: </b>{{ item.gender}}</p>
                         <p><b>Height: </b> {{ item.height }}</p>
                         <p><b>Mass: </b>{{ item.mass }}</p>
                         <p><b>Eye Color: </b>{{ item.eye_color}}</p>
-                      </v-col-6>
-                      <v-col-6 class="caracteristics-column">
-                        <p><b>Films</b></p>
-                        <p v-for="(film, i) in item.films" :key="i" cols="12">
-                        {{  find(film)}}
-                      </p>
+                      </v-col>
+                      <v-col cols="6" sm="4" md="3" lg="3" offset-lg="1">
+                        <span><b>Films</b></span>
+                        <span v-for="(film, i) in item.films" :key="i" cols="12">
+                        {{film}}
+                      </span>
 
-                      </v-col-6>
+                      </v-col>
                     </v-row>
 
 
@@ -55,16 +55,6 @@ export default {
       }
     },
   },
-
-  methods: {
-    ...mapMutations("Films", ["setUrl"]),
-    ...mapActions("Films", ["getFilms"]),
-    find(val){
-      this.setUrl(val);
-      let obj = this.getFilms();
-      return obj.title
-    }
-  }
 }
 </script>
 
@@ -75,8 +65,6 @@ export default {
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
-
-
 }
 
 .caracteristics-column {

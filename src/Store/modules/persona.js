@@ -39,7 +39,6 @@ export default {
       try {
         const res = await fetch(`https://swapi.dev/api/people/`);
         const json = await res.json();
-        console.log('json', json)
         commit('setDados', json)
       } catch (err) {
         console.error('err', err);
