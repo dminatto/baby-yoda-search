@@ -28,7 +28,7 @@
           justify="space-around"
         >
           <v-btn depressed
-                 @click="getPrevious"
+                 @click="getPreviousPage"
                  :pointer-events="hasPrevious"
           >
             Previous
@@ -36,7 +36,7 @@
           <v-btn depressed
                  color="primary"
                  :pointer-events="hasNext"
-                 @click="getNext"
+                 @click="getNextPage"
           >
             Next
           </v-btn>
@@ -56,26 +56,59 @@ export default {
     model: null,
   }),
   created() {
-    this.getCaracteristics();
+    this.findFilms().then((res) => {
+      this.getCaracteristics().then((res) => {
+        this.includeFilmsToCaracter()
+      })
+    })
   },
   methods: {
-    ...mapMutations("Persona", ["setDados", "getDados", "setQuery", "hasNext", "hasPrevious"]),
+    ...mapMutations("Persona", ["setQuery", "hasNext", "hasPrevious"]),
+    ...mapMutations("Films", ["getFilms"]),
     ...mapActions("Persona", ["getCaracteristics", "findPeople", "getPrevious", "getNext"]),
+    ...mapActions("Films", ["findFilms"]),
     onChange(val) {
       this.setQuery(val);
       if (val === "") {
-        this.getCaracteristics();
+        this.getCaracteristics().then((res) => {
+          this.includeFilmsToCaracter()
+        });
       } else {
-        this.findPeople();
+        this.findPeople().then((res) => {
+          this.includeFilmsToCaracter()
+        });
       }
     },
+    includeFilmsToCaracter: function () {
+      this.entries = this.entries.map((entry) => {
+        return entry.films = entry.films.map((films) => {
+          let obj = this.listFilms.find(el => el.url === films)
+          console.log(obj)
+          let date = new Date(obj.release_date)
+          return  date.getFullYear() + ' - ' + obj.title
+        });
+      })
+    },
+    getNextPage: function () {
+      this.getNext().then((res) => {
+        this.includeFilmsToCaracter()
+      });
+    },
+    getPreviousPage: function () {
+      this.getPrevious().then((res) => {
+        this.includeFilmsToCaracter()
+      });
+    }
   },
   computed: {
+    ...mapState("Films", {
+      listFilms: state => state.results
+    }),
     ...mapState("Persona", {
       entries: state => state.entries
     }),
   },
-  watch: {},
+
 };
 </script>
 

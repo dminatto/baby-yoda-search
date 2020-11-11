@@ -3,30 +3,22 @@ import {generateCodeFrame} from "vue-template-compiler";
 export default {
   namespaced: true,
   state: {
-    url: '',
-    entries: {
-      name: '',
-      year: '',
-    }
+    results: null
   },
   mutations: {
-    async setUrl(state, payload) {
-      state.url = payload.url;
+    setResults(state, payload) {
+      state.results =  payload.results
     },
-    setDados(state, payload) {
-      state.entries.name = payload.title;
-      state.entries.year = payload.year;
+    getFilms(state){
+      return state.results;
     }
   },
   actions: {
-    async getFilms({commit, state}) {
+    async findFilms({commit, state}) {
       try {
-        let a = `${state.url}`;
-        console.log(a)
-        const res = await fetch(a);
+        const res = await fetch(`https://swapi.dev/api/films/`);
         const json = await res.json();
-        console.log('json', json)
-        commit('setDados', json)
+        commit('setResults', json)
       } catch (err) {
         console.error('err', err);
       }

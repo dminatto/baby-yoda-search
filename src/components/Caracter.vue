@@ -1,52 +1,48 @@
 <template>
   <div :items="items">
     <v-container>
-      <v-row dense>
-        <v-col v-for="(item, i) in items" :key="i" cols="12">
+      <v-flex v-for="(item, i) in items" :key="i" cols="12">
+        <div class="caracteristics">
           <v-card>
-            <div class="d-flex flex-no-wrap justify-space-between">
-              <div class="">
-                <v-card-title
-                  class="headline"
-                  v-text="item.name"
-                ></v-card-title>
-                <v-card-text>
-                  <div class="caracteristics">
-                    <v-row >
-                      <v-col cols="6" sm="4" md="3" lg="3" offset-lg="1">
-                        <p><b>Birth Year: </b>{{ item.birth_year }}</p>
-                        <p><b>Gender: </b>{{ item.gender}}</p>
-                        <p><b>Height: </b> {{ item.height }}</p>
-                        <p><b>Mass: </b>{{ item.mass }}</p>
-                        <p><b>Eye Color: </b>{{ item.eye_color}}</p>
-                      </v-col>
-                      <v-col cols="6" sm="4" md="3" lg="3" offset-lg="1">
-                        <span><b>Films</b></span>
-                        <span v-for="(film, i) in item.films" :key="i" cols="12">
-                        {{film}}
+            <v-card-title
+              class="headline"
+              v-text="item.name"
+            ></v-card-title>
+            <v-card-text>
+              <div class="caracteristics">
+                <v-layout wrap>
+                  <v-flex xs12 sm6 class="pa-1">
+                    <p><b>Birth Year: </b>{{ item.birth_year }}</p>
+                    <p><b>Gender: </b>{{ item.gender }}</p>
+                    <p><b>Height: </b> {{ item.height }}</p>
+                    <p><b>Mass: </b>{{ item.mass }}</p>
+                    <p><b>Eye Color: </b>{{ item.eye_color }}</p>
+                  </v-flex>
+                  <v-flex xs12 sm6 class="pa-1">
+                    <p><b>Films</b></p>
+                    <span v-for="(film, i) in item.films" :key="i" cols="12">
+                        <p>{{ film }}</p>
                       </span>
-
-                      </v-col>
-                    </v-row>
-
-
-                  </div>
-                </v-card-text>
+                  </v-flex>
+                </v-layout>
               </div>
-            </div>
+            </v-card-text>
           </v-card>
-        </v-col>
-      </v-row>
+        </div>
+      </v-flex>
     </v-container>
   </div>
 </template>
 
 <script>
 
-import { mapMutations, mapState, mapActions } from "vuex";
+import {mapMutations, mapState, mapActions} from "vuex";
 
 export default {
   name: "Caracter",
+  data: () => ({
+    model: null,
+  }),
   props: {
     items: {
       type: Array,
@@ -61,13 +57,7 @@ export default {
 <style scoped>
 
 .caracteristics {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: center;
-}
-
-.caracteristics-column {
-
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 </style>

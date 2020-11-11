@@ -1,5 +1,3 @@
-import {generateCodeFrame} from "vue-template-compiler";
-
 export default {
   namespaced: true,
   state: {
@@ -11,35 +9,30 @@ export default {
     hasPrevious: false,
   },
   mutations: {
-    setDados(state, payload) {
+    setCaracters(state, payload) {
       state.entries = payload.results;
       state.previous = payload.previous;
       state.hasNext = (state.next !== null)
       state.next = payload.next;
       state.hasPrevious = (state.previous !== null)
     },
-    getDados(state) {
-      return state.entries;
-    },
     setQuery(state, payload) {
       state.query = payload;
     },
-    getQuery(state) {
-      return state.query;
-    },
-    hasNext(state){
+    hasNext(state) {
       return state.hasNext;
     },
-    hasPrevious(state){
+    hasPrevious(state) {
       return state.hasPrevious
     }
   },
   actions: {
+
     async getCaracteristics({commit, state}) {
       try {
         const res = await fetch(`https://swapi.dev/api/people/`);
         const json = await res.json();
-        commit('setDados', json)
+        commit('setCaracters', json)
       } catch (err) {
         console.error('err', err);
       }
@@ -48,7 +41,7 @@ export default {
       try {
         const res = await fetch(state.next);
         const json = await res.json();
-        commit('setDados', json)
+        commit('setCaracters', json)
       } catch (err) {
         console.error('err', err);
       }
@@ -57,22 +50,21 @@ export default {
       try {
         const res = await fetch(state.previous);
         const json = await res.json();
-        commit('setDados', json)
+        commit('setCaracters', json)
       } catch (err) {
         console.error('err', err);
       }
     },
-    async findPeople ({commit, state}) {
+    async findPeople({commit, state}) {
       try {
         let string = state.query;
         const res = await fetch(`https://swapi.dev/api/people/?search=${string}`);
         const json = await res.json();
-        commit('setDados', json)
+        this.format(json);
       } catch (err) {
         console.error('err', err);
       }
     },
   }
 }
-
 

@@ -3,10 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import Vuetify from 'vuetify'
+import Vuex from "vuex";
 import store from './Store/store'
 import 'vuetify/dist/vuetify.min.css'
 
 Vue.config.productionTip = false
+Vue.use(Vuex);
 
 Vue.use(Vuetify);
 
